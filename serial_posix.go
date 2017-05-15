@@ -70,8 +70,7 @@ func openPort(name string, baud int, databits byte, parity Parity, stopbits Stop
 	case 50:
 		speed = C.B50
 	default:
-		f.Close()
-		return nil, fmt.Errorf("Unknown baud rate %v", baud)
+		speed = C.speed_t(baud) // FIXME: this is just an ugly way to select some more baudrates
 	}
 
 	_, err = C.cfsetispeed(&st, speed)
